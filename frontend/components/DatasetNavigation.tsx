@@ -1,3 +1,23 @@
+export const getSolverProblemUrl = ({
+  selectedProblemType,
+  seedStr,
+  solverName,
+  problemTypes,
+}: {
+  selectedProblemType?: string
+  seedStr?: string
+  solverName: string
+  problemTypes: string[]
+}) => {
+  const targetProblemType =
+    selectedProblemType ||
+    (problemTypes.includes("keyboards")
+      ? "keyboards"
+      : problemTypes[0] || "keyboards")
+  const targetSeed = seedStr || "1"
+  return `/problem/${targetProblemType}/${targetSeed}/${solverName}`
+}
+
 export const DatasetNavigation = () => {
   const problemTypes = window.AVAILABLE_DATASETS ?? ["single-trace"]
   const [, , selectedProblemType, seedStr, solverName] =
@@ -47,7 +67,12 @@ export const DatasetNavigation = () => {
             !window.AVAILABLE_SOLVERS || window.AVAILABLE_SOLVERS.length <= 1
           }
           onChange={(e) => {
-            window.location.href = `/problem/${selectedProblemType}/${seedStr}/${e.target.value}`
+            window.location.href = getSolverProblemUrl({
+              selectedProblemType,
+              seedStr,
+              solverName: e.target.value,
+              problemTypes,
+            })
           }}
         >
           {(window.AVAILABLE_SOLVERS || [window.SOLVER_NAME]).map(
