@@ -46,7 +46,7 @@ export class IJumpAutorouter extends GeneralizedAstarAutorouter {
         } else if (
           dir.dx === forwardDir.dx &&
           dir.dy === forwardDir.dy &&
-          node.parent?.obstacleHit
+          node.obstacleHit
         ) {
           return false
         }
